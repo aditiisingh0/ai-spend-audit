@@ -36,6 +36,14 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
   const [aiSummary, setAiSummary] = useState<string>('');
   const [summarySource, setSummarySource] = useState<'ai' | 'fallback' | 'loading'>('loading');
 
+  // Lead capture state
+  const [email, setEmail] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [role, setRole] = useState('');
+  const [website, setWebsite] = useState(''); // honeypot
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadLoading, setLeadLoading] = useState(false);
+
   useEffect(() => {
     async function fetchSummary() {
       try {
@@ -54,6 +62,33 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
     }
     fetchSummary();
   }, [summary, useCase]);
+
+  async function handleLeadSubmit() {
+    if (!email || !email.includes('@')) return;
+    setLeadLoading(true);
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          companyName,
+          role,
+          website, // honeypot
+          teamSize: summary.results.length,
+          monthlySpend: summary.totalMonthlySpend,
+          monthlySaving: summary.totalMonthlySaving,
+          annualSaving: summary.totalAnnualSaving,
+          useCase,
+          toolsUsed: summary.results.map(r => r.toolName).join(', '),
+        }),
+      });
+      setLeadSubmitted(true);
+    } catch {
+      setLeadSubmitted(true); // Still show success to user
+    }
+    setLeadLoading(false);
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -118,11 +153,70 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
           <p className="text-sm text-gray-300 mb-3">
             Your AI stack looks optimized. We will notify you when new savings opportunities apply to your tools.
           </p>
-          <button className="bg-green-600 hover:bg-green-500 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-sm">
-            Notify Me of New Savings →
-          </button>
         </div>
       )}
+
+      {/* Lead capture — shown after results */}
+      <div className="bg-gray-900 rounded-xl p-6 mb-6 border border-gray-700">
+        {leadSubmitted ? (
+          <div className="text-center py-4">
+            <p className="text-green-400 font-semibold text-lg mb-1">✅ Report saved!</p>
+            <p className="text-gray-400 text-sm">We will send your full audit report to {email}</p>
+          </div>
+        ) : (
+          <>
+            <h3 className="font-semibold mb-1">Get your full report by email</h3>
+            <p className="text-gray-400 text-sm mb-4">Free. No spam. Unsubscribe anytime.</p>
+
+            {/* Honeypot — hidden from real users */}
+            <input
+              type="text"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              style={{ display: 'none' }}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+
+            <div className="space-y-3">
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-gray-800 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500"
+              />
+              <div className="grid grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  placeholder="Company name (optional)"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  className="w-full bg-gray-800 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500"
+                />
+                <input
+                  type="text"
+                  placeholder="Your role (optional)"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full bg-gray-800 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-500"
+                />
+              </div>
+              <button
+                onClick={handleLeadSubmit}
+                disabled={leadLoading || !email}
+                className={`w-full font-semibold py-3 rounded-xl transition-colors ${
+                  email
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                    : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                {leadLoading ? 'Saving...' : 'Send me the report →'}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
 
       {/* Per tool breakdown */}
       <h2 className="text-lg font-semibold mb-4">Tool-by-Tool Breakdown</h2>
