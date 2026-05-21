@@ -45,3 +45,29 @@
 - Connect Anthropic API for personalized audit summary
 - Start building backend — Supabase for lead capture
 - Add shareable URL with OG tags
+
+## Day 3 — 2026-05-22
+
+**Hours worked:** 3
+
+**What I did:**
+- Built AI summary feature using Anthropic API with graceful fallback to templated summary
+- Set up Supabase database and created leads table
+- Built lead capture form — email, company name, role
+- Added honeypot spam protection
+- Leads saving successfully to Supabase — verified with test submission
+- Connected all features end to end — form → audit → results → lead capture
+
+**What I learned:**
+- Supabase is very fast to set up — table ready in minutes
+- Honeypot is simpler than captcha and less annoying for real users
+- Always test the full flow end to end, not just individual pieces
+
+**Blockers / what I'm stuck on:**
+- Anthropic API key not added yet — using fallback summary for now
+- Shareable URL still pending
+
+**Plan for tomorrow:**
+- Build shareable URL with unique ID and OG tags
+- Deploy to Vercel
+- Start UI polish
