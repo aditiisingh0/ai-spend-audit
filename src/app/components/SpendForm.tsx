@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { runAudit } from './auditEngine';
+import AuditResults from './AuditResults';
 
 const TOOLS = [
   {
@@ -79,14 +81,13 @@ const DEFAULT_FORM: FormData = {
 
 export default function SpendForm() {
   const [form, setForm] = useState<FormData>(DEFAULT_FORM);
+  const [showResults, setShowResults] = useState(false);
 
-  // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('ai-audit-form');
     if (saved) setForm(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage on every change
   useEffect(() => {
     localStorage.setItem('ai-audit-form', JSON.stringify(form));
   }, [form]);
@@ -114,6 +115,18 @@ export default function SpendForm() {
   const totalMonthly = Object.values(form.tools)
     .filter((t) => t.enabled)
     .reduce((sum, t) => sum + Number(t.monthlySpend), 0);
+
+  const enabledCount = Object.values(form.tools).filter((t) => t.enabled).length;
+
+  if (showResults) {
+    const summary = runAudit(form);
+    return (
+      <AuditResults
+        summary={summary}
+        onBack={() => setShowResults(false)}
+      />
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -221,7 +234,15 @@ export default function SpendForm() {
           <p className="text-sm text-gray-400">Total Monthly Spend</p>
           <p className="text-3xl font-bold">${totalMonthly.toLocaleString()}</p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+        <button
+          onClick={() => enabledCount > 0 && setShowResults(true)}
+          disabled={enabledCount === 0}
+          className={`font-semibold px-6 py-3 rounded-xl transition-colors ${
+            enabledCount > 0
+              ? 'bg-blue-600 hover:bg-blue-500 text-white'
+              : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+          }`}
+        >
           Run Audit →
         </button>
       </div>
