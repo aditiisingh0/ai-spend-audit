@@ -122,10 +122,11 @@ export default function SpendForm() {
     const summary = runAudit(form);
     return (
       <AuditResults
-        summary={summary}
-        onBack={() => setShowResults(false)}
-      />
-    );
+       summary={summary}
+       useCase={form.useCase}
+       onBack={() => setShowResults(false)}
+   />
+  );
   }
 
   return (

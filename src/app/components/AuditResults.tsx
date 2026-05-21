@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { AuditSummary } from './auditEngine';
 
 interface Props {
   summary: AuditSummary;
+  useCase: string;
   onBack: () => void;
 }
 
@@ -28,9 +30,30 @@ const severityLabel = {
   ok: 'Optimized',
 };
 
-export default function AuditResults({ summary, onBack }: Props) {
+export default function AuditResults({ summary, useCase, onBack }: Props) {
   const hasHighSavings = summary.totalMonthlySaving > 500;
   const hasLowSavings = summary.totalMonthlySaving < 100;
+  const [aiSummary, setAiSummary] = useState<string>('');
+  const [summarySource, setSummarySource] = useState<'ai' | 'fallback' | 'loading'>('loading');
+
+  useEffect(() => {
+    async function fetchSummary() {
+      try {
+        const res = await fetch('/api/summary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ summary, useCase }),
+        });
+        const data = await res.json();
+        setAiSummary(data.summary);
+        setSummarySource(data.source);
+      } catch {
+        setAiSummary('Could not load summary. Please try again.');
+        setSummarySource('fallback');
+      }
+    }
+    fetchSummary();
+  }, [summary, useCase]);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -52,14 +75,32 @@ export default function AuditResults({ summary, onBack }: Props) {
         </div>
       </div>
 
-      {/* Credex CTA — only for high savings */}
+      {/* AI Summary */}
+      <div className="bg-gray-900 rounded-xl p-5 mb-6 border border-gray-700">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-sm font-medium text-gray-400">
+            {summarySource === 'loading' ? '⏳ Generating your summary...' : summarySource === 'ai' ? '✨ AI-Powered Summary' : '📋 Your Audit Summary'}
+          </span>
+        </div>
+        {summarySource === 'loading' ? (
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-700 rounded mb-2 w-full"></div>
+            <div className="h-4 bg-gray-700 rounded mb-2 w-5/6"></div>
+            <div className="h-4 bg-gray-700 rounded w-4/6"></div>
+          </div>
+        ) : (
+          <p className="text-gray-300 text-sm leading-relaxed">{aiSummary}</p>
+        )}
+      </div>
+
+      {/* Credex CTA */}
       {hasHighSavings && (
         <div className="bg-yellow-500/10 border border-yellow-500 rounded-xl p-5 mb-6">
           <p className="font-semibold text-yellow-400 mb-1">
             💰 You qualify for Credex savings
           </p>
           <p className="text-sm text-gray-300 mb-3">
-            With ${summary.totalMonthlySaving.toLocaleString()}/mo in identified savings, 
+            With ${summary.totalMonthlySaving.toLocaleString()}/mo in identified savings,
             Credex can help you get discounted AI credits — same tools, lower cost.
           </p>
           <button className="bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-5 py-2 rounded-lg transition-colors text-sm">
@@ -68,7 +109,7 @@ export default function AuditResults({ summary, onBack }: Props) {
         </div>
       )}
 
-      {/* Already optimized message */}
+      {/* Already optimized */}
       {hasLowSavings && (
         <div className="bg-green-500/10 border border-green-500 rounded-xl p-5 mb-6">
           <p className="font-semibold text-green-400 mb-1">
