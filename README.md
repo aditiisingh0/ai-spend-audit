@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Spend Audit
 
-## Getting Started
+A free web app that audits your AI tool spending and tells you exactly
+where you are overpaying — with specific recommendations and savings numbers.
+Built as a lead generation tool for Credex, a discounted AI credits marketplace.
 
-First, run the development server:
+**Live:** https://ai-spend-audit-gules.vercel.app
+
+## Screenshots
+
+> Add 3 screenshots here after taking them — form, results page, shareable URL
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Run locally
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Run tests
+npm test
+
+# Deploy
+# Push to main — Vercel auto-deploys
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_KEY=your_supabase_service_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+NEXT_PUBLIC_APP_URL=your_deployed_url
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Decisions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**1. Hardcoded audit rules instead of AI**
+The audit engine uses deterministic if/else logic, not an LLM. Financial
+recommendations need to be consistent and testable. AI is used only for
+the summary paragraph where creativity adds value.
 
-## Learn More
+**2. Next.js over plain React**
+Needed server-side rendering for the shareable audit page (OG tags require
+server-rendered meta tags). Next.js App Router gives this out of the box.
+API routes replace the need for a separate backend.
 
-To learn more about Next.js, take a look at the following resources:
+**3. Supabase over Firebase**
+Postgres gives us proper relational queries. Supabase has a built-in
+dashboard to view leads without building an admin panel. Free tier is
+generous enough for an MVP.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**4. localStorage for form persistence**
+Simple, zero-latency, no backend needed. The form data is not sensitive.
+If the user clears their browser they lose their inputs — acceptable
+tradeoff for the simplicity.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**5. Email gate after value, never before**
+The audit results are shown immediately with no login required. Email is
+only asked after the user has seen their savings number. This maximises
+completion rate and trust.
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** Next.js 16, TypeScript, Tailwind CSS
+- **Backend:** Next.js API Routes (serverless)
+- **Database:** Supabase (PostgreSQL)
+- **Deployment:** Vercel
+- **Testing:** Jest + ts-jest
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Live URL
+
+https://ai-spend-audit-gules.vercel.app
