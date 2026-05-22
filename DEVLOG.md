@@ -71,3 +71,27 @@
 - Build shareable URL with unique ID and OG tags
 - Deploy to Vercel
 - Start UI polish
+
+## Day 4 — 2026-05-23
+
+**Hours worked:** 3
+
+**What I did:**
+- Built shareable audit URL with unique ID per audit
+- Added OG tags and Twitter Card meta tags for link previews
+- Created audits table in Supabase to store shared audits
+- Deployed to Vercel — live at https://ai-spend-audit-gules.vercel.app
+- Updated environment variables in Vercel dashboard
+
+**What I learned:**
+- Vercel deployment is very fast — under 2 minutes from push to live
+- Environment variables must be set in Vercel separately from .env.local
+
+**Blockers / what I'm stuck on:**
+- NEXT_PUBLIC_APP_URL needs to be updated to real Vercel URL
+- UI polish still pending
+
+**Plan for tomorrow:**
+- UI polish — better landing page, hero section, improved results page
+- Fill in PRICING_DATA.md, ARCHITECTURE.md
+- Start entrepreneurial files — GTM, ECONOMICS
