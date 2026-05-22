@@ -259,6 +259,31 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
           </div>
         ))}
       </div>
+    {/* Share button */}
+    <button
+     onClick={async () => {
+      const res = await fetch('/api/audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        summary,
+        useCase,
+        toolsData: summary.results,
+      }),
+    });
+    const data = await res.json();
+    if (data.id) {
+      const url = `${window.location.origin}/audit/${data.id}`;
+      await navigator.clipboard.writeText(url);
+      alert('Share link copied!');
+    }
+  }}
+  className="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 rounded-xl transition-colors mb-3"
+>
+  🔗 Copy Shareable Link
+</button>
+
+
 
       {/* Back button */}
       <button
