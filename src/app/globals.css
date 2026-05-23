@@ -42,3 +42,44 @@ body::before {
   background-repeat: repeat;
   background-size: 200px 200px;
 }
+.tool-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.4); }
+  50% { box-shadow: 0 0 35px rgba(37, 99, 235, 0.7); }
+}
+
+.glow-button {
+  animation: glow 2s ease-in-out infinite;
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+  animation: fadeIn 0.4s ease forwards;
+}
+@keyframes expandDown {
+  0% { opacity: 0; max-height: 0; }
+  100% { opacity: 1; max-height: 200px; }
+}
+
+.expand-down {
+  animation: expandDown 0.3s ease forwards;
+  overflow: hidden;
+}

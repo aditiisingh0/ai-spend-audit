@@ -9,27 +9,6 @@ interface Props {
   onBack: () => void;
 }
 
-const severityColors = {
-  high: 'border-red-200 bg-red-50',
-  medium: 'border-yellow-200 bg-yellow-50',
-  low: 'border-blue-200 bg-blue-50',
-  ok: 'border-green-200 bg-green-50',
-};
-
-const severityBadge = {
-  high: 'bg-red-100 text-red-600',
-  medium: 'bg-yellow-100 text-yellow-600',
-  low: 'bg-blue-100 text-blue-600',
-  ok: 'bg-green-100 text-green-600',
-};
-
-const severityLabel = {
-  high: 'High Savings',
-  medium: 'Medium Savings',
-  low: 'Low Savings',
-  ok: 'Optimized',
-};
-
 export default function AuditResults({ summary, useCase, onBack }: Props) {
   const hasHighSavings = summary.totalMonthlySaving > 500;
   const hasLowSavings = summary.totalMonthlySaving < 100;
@@ -85,121 +64,93 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
     setLeadLoading(false);
   }
 
-  return (
-    <div className="max-w-2xl mx-auto">
+  const severityStyle: Record<string, {border: string, bg: string, badge: string, badgeText: string}> = {
+    high: {border: '#fca5a5', bg: '#fff5f5', badge: '#fee2e2', badgeText: '#dc2626'},
+    medium: {border: '#fcd34d', bg: '#fffbeb', badge: '#fef3c7', badgeText: '#d97706'},
+    low: {border: '#93c5fd', bg: '#eff6ff', badge: '#dbeafe', badgeText: '#2563eb'},
+    ok: {border: '#86efac', bg: '#f0fdf4', badge: '#dcfce7', badgeText: '#16a34a'},
+  };
 
-      {/* Hero savings */}
-      <div className="bg-blue-600 rounded-2xl p-8 mb-6 text-center shadow-lg shadow-blue-100">
-        <p className="text-blue-100 text-sm mb-1">Total Potential Savings</p>
-        <p className="text-6xl font-bold text-white mb-2">
+  const severityLabel: Record<string, string> = {
+    high: 'High Savings',
+    medium: 'Medium Savings',
+    low: 'Low Savings',
+    ok: 'Optimized',
+  };
+
+  return (
+    <div className="page-transition" style={{maxWidth: '600px', margin: '0 auto'}}>
+
+      {/* Hero */}
+      <div style={{background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', borderRadius: '20px', padding: '32px', marginBottom: '20px', textAlign: 'center', boxShadow: '0 20px 40px rgba(37,99,235,0.2)'}}>
+        <p style={{color: '#bfdbfe', fontSize: '13px', marginBottom: '8px'}}>Total Potential Savings</p>
+        <p style={{color: '#ffffff', fontSize: '64px', fontWeight: '800', lineHeight: '1', marginBottom: '4px'}}>
           ${summary.totalMonthlySaving.toLocaleString()}
-          <span className="text-2xl font-normal text-blue-200">/mo</span>
+          <span style={{fontSize: '24px', fontWeight: '400', color: '#bfdbfe'}}>/mo</span>
         </p>
-        <p className="text-blue-100">
-          ${summary.totalAnnualSaving.toLocaleString()} saved per year
-        </p>
-        <div className="mt-4 pt-4 border-t border-blue-500">
-          <p className="text-sm text-blue-100">
-            Current spend: <span className="text-white font-semibold">${summary.totalMonthlySpend.toLocaleString()}/mo</span>
-          </p>
+        <p style={{color: '#bfdbfe', fontSize: '14px', marginBottom: '16px'}}>${summary.totalAnnualSaving.toLocaleString()} saved per year</p>
+        <div style={{borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '16px'}}>
+          <p style={{color: '#bfdbfe', fontSize: '13px'}}>Current spend: <span style={{color: '#ffffff', fontWeight: '600'}}>${summary.totalMonthlySpend.toLocaleString()}/mo</span></p>
         </div>
       </div>
 
       {/* AI Summary */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-6 shadow-sm">
-        <p className="text-xs font-medium text-gray-400 mb-2 uppercase tracking-wide">
+      <div style={{background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '20px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)'}}>
+        <p style={{fontSize: '11px', fontWeight: '600', color: '#94a3b8', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>
           {summarySource === 'loading' ? 'Generating summary...' : summarySource === 'ai' ? 'AI Summary' : 'Audit Summary'}
         </p>
         {summarySource === 'loading' ? (
-          <div className="animate-pulse space-y-2">
-            <div className="h-4 bg-gray-100 rounded w-full"></div>
-            <div className="h-4 bg-gray-100 rounded w-5/6"></div>
-            <div className="h-4 bg-gray-100 rounded w-4/6"></div>
+          <div>
+            <div style={{height: '14px', background: '#f1f5f9', borderRadius: '6px', marginBottom: '8px', width: '100%'}}></div>
+            <div style={{height: '14px', background: '#f1f5f9', borderRadius: '6px', marginBottom: '8px', width: '85%'}}></div>
+            <div style={{height: '14px', background: '#f1f5f9', borderRadius: '6px', width: '70%'}}></div>
           </div>
         ) : (
-          <p className="text-gray-600 text-sm leading-relaxed">{aiSummary}</p>
+          <p style={{color: '#475569', fontSize: '14px', lineHeight: '1.6'}}>{aiSummary}</p>
         )}
       </div>
 
       {/* Credex CTA */}
       {hasHighSavings && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6">
-          <p className="font-semibold text-amber-800 mb-1">
-            You qualify for Credex savings
-          </p>
-          <p className="text-sm text-amber-700 mb-3">
-            With ${summary.totalMonthlySaving.toLocaleString()}/mo in savings identified,
-            Credex can get you discounted AI credits — same tools, lower cost.
-          </p>
-          <button className="bg-amber-500 hover:bg-amber-400 text-white font-semibold px-5 py-2 rounded-xl transition-colors text-sm">
+        <div style={{background: '#fffbeb', border: '1px solid #fcd34d', borderRadius: '16px', padding: '20px', marginBottom: '16px'}}>
+          <p style={{fontWeight: '600', color: '#92400e', marginBottom: '6px'}}>You qualify for Credex savings</p>
+          <p style={{fontSize: '13px', color: '#a16207', marginBottom: '12px'}}>With ${summary.totalMonthlySaving.toLocaleString()}/mo in savings, Credex can get you discounted AI credits.</p>
+          <button style={{background: '#f59e0b', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontSize: '13px', fontWeight: '600', cursor: 'pointer'}}>
             Book a Free Credex Consultation
           </button>
         </div>
       )}
 
-      {/* Already optimized */}
+      {/* Optimized */}
       {hasLowSavings && (
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-5 mb-6">
-          <p className="font-semibold text-green-800 mb-1">
-            You are spending well
-          </p>
-          <p className="text-sm text-green-700">
-            Your AI stack looks optimized for your team size and use case.
-          </p>
+        <div style={{background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '16px', padding: '20px', marginBottom: '16px'}}>
+          <p style={{fontWeight: '600', color: '#14532d', marginBottom: '6px'}}>You are spending well</p>
+          <p style={{fontSize: '13px', color: '#166534'}}>Your AI stack looks optimized for your team size and use case.</p>
         </div>
       )}
 
       {/* Lead capture */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6 shadow-sm">
+      <div style={{background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '20px', marginBottom: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)'}}>
         {leadSubmitted ? (
-          <div className="text-center py-4">
-            <p className="text-green-600 font-semibold text-lg mb-1">Report saved!</p>
-            <p className="text-gray-400 text-sm">We will send your audit report to {email}</p>
+          <div style={{textAlign: 'center', padding: '16px'}}>
+            <p style={{color: '#16a34a', fontWeight: '600', fontSize: '16px', marginBottom: '4px'}}>Report saved!</p>
+            <p style={{color: '#94a3b8', fontSize: '13px'}}>We will send your audit report to {email}</p>
           </div>
         ) : (
           <>
-            <h3 className="font-semibold text-gray-900 mb-1">Get your full report by email</h3>
-            <p className="text-gray-400 text-sm mb-4">Free. No spam. Unsubscribe anytime.</p>
-            <input
-              type="text"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              style={{ display: 'none' }}
-              tabIndex={-1}
-              autoComplete="off"
-            />
-            <div className="space-y-3">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <div className="grid grid-cols-2 gap-3">
-                <input
-                  type="text"
-                  placeholder="Company (optional)"
-                  value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  type="text"
-                  placeholder="Role (optional)"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+            <p style={{fontWeight: '600', color: '#0f172a', marginBottom: '4px'}}>Get your full report by email</p>
+            <p style={{fontSize: '13px', color: '#94a3b8', marginBottom: '16px'}}>Free. No spam. Unsubscribe anytime.</p>
+            <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} style={{display: 'none'}} tabIndex={-1} autoComplete="off" />
+            <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+              <input type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '14px', color: '#0f172a', outline: 'none', boxSizing: 'border-box'}} />
+              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
+                <input type="text" placeholder="Company (optional)" value={companyName} onChange={(e) => setCompanyName(e.target.value)} style={{border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '13px', color: '#0f172a', outline: 'none'}} />
+                <input type="text" placeholder="Role (optional)" value={role} onChange={(e) => setRole(e.target.value)} style={{border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '13px', color: '#0f172a', outline: 'none'}} />
               </div>
               <button
                 onClick={handleLeadSubmit}
                 disabled={leadLoading || !email}
-                className={`w-full font-semibold py-3 rounded-xl transition-all ${
-                  email
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-100'
-                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                }`}
+                style={{background: email ? '#2563eb' : '#e2e8f0', color: email ? '#ffffff' : '#94a3b8', border: 'none', padding: '12px', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: email ? 'pointer' : 'not-allowed'}}
               >
                 {leadLoading ? 'Saving...' : 'Send me the report'}
               </button>
@@ -209,43 +160,37 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
       </div>
 
       {/* Tool breakdown */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Tool-by-Tool Breakdown</h2>
-      <div className="space-y-3 mb-8">
-        {summary.results.map((result) => (
-          <div
-            key={result.toolId}
-            className={`rounded-2xl p-5 border ${severityColors[result.severity]}`}
-          >
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <span className="font-semibold text-gray-900">{result.toolName}</span>
-                <span className="text-gray-400 text-sm ml-2">{result.currentPlan}</span>
+      <p style={{fontWeight: '600', color: '#0f172a', fontSize: '16px', marginBottom: '12px'}}>Tool-by-Tool Breakdown</p>
+      <div style={{display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px'}}>
+        {summary.results.map((result) => {
+          const s = severityStyle[result.severity];
+          return (
+            <div key={result.toolId} style={{background: s.bg, borderRadius: '14px', border: `1.5px solid ${s.border}`, padding: '16px 20px'}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px'}}>
+                <div>
+                  <span style={{fontWeight: '600', color: '#0f172a', fontSize: '15px'}}>{result.toolName}</span>
+                  <span style={{color: '#94a3b8', fontSize: '13px', marginLeft: '8px'}}>{result.currentPlan}</span>
+                </div>
+                <span style={{background: s.badge, color: s.badgeText, padding: '4px 10px', borderRadius: '999px', fontSize: '11px', fontWeight: '600'}}>
+                  {severityLabel[result.severity]}
+                </span>
               </div>
-              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${severityBadge[result.severity]}`}>
-                {severityLabel[result.severity]}
-              </span>
+              <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px', fontSize: '13px'}}>
+                <span style={{color: '#64748b'}}>Current: <span style={{color: '#0f172a', fontWeight: '500'}}>${result.currentSpend}/mo</span></span>
+                {result.potentialSaving > 0 && (
+                  <>
+                    <span style={{color: '#cbd5e1'}}>→</span>
+                    <span style={{color: '#16a34a', fontWeight: '600'}}>Save ${result.potentialSaving}/mo</span>
+                  </>
+                )}
+              </div>
+              <div style={{background: 'rgba(255,255,255,0.7)', borderRadius: '10px', padding: '12px'}}>
+                <p style={{fontWeight: '600', color: '#0f172a', fontSize: '13px', marginBottom: '4px'}}>{result.recommendedAction}</p>
+                <p style={{color: '#64748b', fontSize: '12px'}}>{result.reason}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-3 mb-3 text-sm">
-              <span className="text-gray-500">
-                Current: <span className="text-gray-900 font-medium">${result.currentSpend}/mo</span>
-              </span>
-              {result.potentialSaving > 0 && (
-                <>
-                  <span className="text-gray-300">→</span>
-                  <span className="text-green-600 font-medium">
-                    Save ${result.potentialSaving}/mo
-                  </span>
-                </>
-              )}
-            </div>
-            <div className="bg-white/60 rounded-xl p-3">
-              <p className="text-sm font-medium text-gray-900 mb-1">
-                {result.recommendedAction}
-              </p>
-              <p className="text-xs text-gray-500">{result.reason}</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Share button */}
@@ -263,17 +208,17 @@ export default function AuditResults({ summary, useCase, onBack }: Props) {
             alert('Share link copied!');
           }
         }}
-        className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-2xl transition-colors mb-3"
+        style={{width: '100%', background: '#f8fafc', border: '1px solid #e2e8f0', color: '#475569', padding: '12px', borderRadius: '12px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', marginBottom: '10px'}}
       >
-        Copy Shareable Link
+        🔗 Copy Shareable Link
       </button>
 
       {/* Back button */}
       <button
         onClick={onBack}
-        className="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 font-semibold py-3 rounded-2xl transition-colors"
+        style={{width: '100%', background: '#ffffff', border: '1px solid #e2e8f0', color: '#64748b', padding: '12px', borderRadius: '12px', fontSize: '14px', fontWeight: '600', cursor: 'pointer'}}
       >
-        Edit My Tools
+        ← Edit My Tools
       </button>
     </div>
   );

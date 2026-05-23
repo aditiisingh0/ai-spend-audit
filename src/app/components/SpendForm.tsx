@@ -116,6 +116,7 @@ export default function SpendForm() {
           return (
             <div
               key={tool.id}
+              className="tool-card fade-in-up"
               style={{
                 background: entry.enabled ? '#f0f7ff' : '#ffffff',
                 borderRadius: '14px',
@@ -196,6 +197,7 @@ export default function SpendForm() {
         <button
           onClick={() => enabledCount > 0 && setShowResults(true)}
           disabled={enabledCount === 0}
+          className={enabledCount > 0 ? 'glow-button' : ''}
           style={{
             background: enabledCount > 0 ? '#2563eb' : '#e2e8f0',
             color: enabledCount > 0 ? '#ffffff' : '#94a3b8',
