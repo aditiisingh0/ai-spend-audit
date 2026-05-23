@@ -2,63 +2,62 @@ import SpendForm from './components/SpendForm';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <main style={{minHeight: '100vh', background: '#ffffff', color: '#0f172a'}}>
 
-      <nav className="border-b border-gray-100 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AI</span>
+      <nav style={{borderBottom: '1px solid #e5e7eb', padding: '16px 24px'}}>
+        <div style={{maxWidth: '800px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+            <div style={{width: '32px', height: '32px', background: '#2563eb', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <span style={{color: 'white', fontWeight: 'bold', fontSize: '12px'}}>AI</span>
             </div>
-            <span className="font-semibold text-gray-900">SpendAudit</span>
+            <span style={{fontWeight: '600', color: '#0f172a'}}>SpendAudit</span>
           </div>
-          <span className="text-sm text-gray-500">By Credex</span>
+          <span style={{fontSize: '14px', color: '#6b7280'}}>By Credex</span>
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-        <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 text-sm px-4 py-1.5 rounded-full mb-8">
-          <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+      <div style={{maxWidth: '800px', margin: '0 auto', padding: '48px 24px 80px', textAlign: 'center'}}>
+        <div style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#eff6ff', border: '1px solid #bfdbfe', color: '#2563eb', fontSize: '14px', padding: '6px 16px', borderRadius: '999px', marginBottom: '32px'}}>
+          <span style={{width: '8px', height: '8px', background: '#3b82f6', borderRadius: '50%', display: 'inline-block'}}></span>
           Free • No login required • Instant results
         </div>
 
-        <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-gray-900">
-          Are you overpaying
-          <br />
-          <span className="text-blue-600">for AI tools?</span>
+        <h1 style={{fontSize: '56px', fontWeight: '800', lineHeight: '1.1', marginBottom: '24px', color: '#0f172a'}}>
+          Are you overpaying<br />
+          <span style={{color: '#2563eb'}}>for AI tools?</span>
         </h1>
 
-        <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-          Most startups waste $200-$800/month on redundant or wrong-sized AI subscriptions.
-          Find out where your money is going in 2 minutes.
+        <p style={{fontSize: '20px', color: '#6b7280', marginBottom: '48px', maxWidth: '600px', margin: '0 auto 48px'}}>
+          Most startups waste $200-$800/month on redundant AI subscriptions.
+          Find out in 2 minutes — free.
         </p>
 
-        <div className="flex items-center justify-center gap-12 mb-16">
-          <div className="text-center">
-            <p className="text-3xl font-bold text-gray-900">$1,440</p>
-            <p className="text-sm text-gray-400 mt-1">avg annual savings</p>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '48px', marginBottom: '64px'}}>
+          <div style={{textAlign: 'center'}}>
+            <p style={{fontSize: '28px', fontWeight: '700', color: '#0f172a'}}>$1,440</p>
+            <p style={{fontSize: '13px', color: '#9ca3af', marginTop: '4px'}}>avg annual savings</p>
           </div>
-          <div className="w-px h-10 bg-gray-200"></div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-gray-900">8</p>
-            <p className="text-sm text-gray-400 mt-1">tools analyzed</p>
+          <div style={{width: '1px', height: '40px', background: '#e5e7eb'}}></div>
+          <div style={{textAlign: 'center'}}>
+            <p style={{fontSize: '28px', fontWeight: '700', color: '#0f172a'}}>8</p>
+            <p style={{fontSize: '13px', color: '#9ca3af', marginTop: '4px'}}>tools analyzed</p>
           </div>
-          <div className="w-px h-10 bg-gray-200"></div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-gray-900">2 min</p>
-            <p className="text-sm text-gray-400 mt-1">to complete</p>
+          <div style={{width: '1px', height: '40px', background: '#e5e7eb'}}></div>
+          <div style={{textAlign: 'center'}}>
+            <p style={{fontSize: '28px', fontWeight: '700', color: '#0f172a'}}>2 min</p>
+            <p style={{fontSize: '13px', color: '#9ca3af', marginTop: '4px'}}>to complete</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-6 py-16">
+      <div style={{background: '#f8fafc', borderTop: '1px solid #e5e7eb', padding: '64px 24px'}}>
+        <div style={{maxWidth: '600px', margin: '0 auto'}}>
           <SpendForm />
         </div>
       </div>
 
-      <div className="border-t border-gray-100 py-8 text-center text-gray-400 text-sm">
-        <p>Built by Credex — discounted AI credits for startups</p>
+      <div style={{borderTop: '1px solid #e5e7eb', padding: '32px', textAlign: 'center', color: '#9ca3af', fontSize: '14px'}}>
+        Built by Credex — discounted AI credits for startups
       </div>
     </main>
   );

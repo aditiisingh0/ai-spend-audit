@@ -164,11 +164,11 @@ export default function SpendForm() {
       </div>
 
       {/* Tools */}
-      <div className="mb-6">
+      <div className="mb-20">
         <h2 className="text-base font-semibold text-gray-900 mb-3">
           AI Tools You Pay For
         </h2>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {TOOLS.map((tool) => {
             const entry = form.tools[tool.id];
             return (

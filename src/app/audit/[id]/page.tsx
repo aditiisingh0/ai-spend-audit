@@ -95,7 +95,7 @@ export default async function AuditPage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <main className="min-h-screen bg-gray-950 text-white p-8">
+    <main className="min-h-screen bg-white text-gray-900">
       <div className="max-w-2xl mx-auto">
 
         {/* Header */}
