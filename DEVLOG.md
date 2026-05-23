@@ -95,3 +95,33 @@
 - UI polish — better landing page, hero section, improved results page
 - Fill in PRICING_DATA.md, ARCHITECTURE.md
 - Start entrepreneurial files — GTM, ECONOMICS
+
+## Day 5 — 2026-05-23 (evening)
+
+**Hours worked:** 6
+
+**What I did:**
+- Improved UI significantly — white theme with gradient background
+- Added blur circles + wave background effects
+- Added noise texture effect for premium feel
+- Added card hover scale effect and shadow
+- Added glow animation on Run Audit button
+- Added fade-in-up animation on tool cards
+- Added expand-down animation when tool is added
+- Added page transition animation on results page
+- Fixed AuditResults.tsx to use inline styles — no more Tailwind conflicts
+- All markdown files filled — GTM, ECONOMICS, REFLECTION, PROMPTS, TESTS, LANDING_COPY, METRICS, ARCHITECTURE, README
+
+**What I learned:**
+- Tailwind classes don't always work reliably with inline styles mixed — inline styles are more predictable
+- CSS animations in globals.css work better than inline style tags in JSX
+
+**Blockers / what I'm stuck on:**
+- User interviews still pending — waiting for replies
+- Anthropic API key not added — using fallback summary
+
+**Plan for tomorrow:**
+- Complete user interviews
+- Add screenshots to README
+- Final polish and bug fixes
+- Submit
