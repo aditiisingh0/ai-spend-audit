@@ -5,19 +5,20 @@ export default function Home() {
     <main style={{minHeight: '100vh', background: 'linear-gradient(135deg, #f0f7ff 0%, #ffffff 50%, #f5f3ff 100%)', color: '#0f172a', position: 'relative', overflow: 'hidden'}}>
 
       {/* Blur circles + Wave effect */}
-<div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0}}>
-  {/* Blur circles */}
-  <div style={{position: 'absolute', top: '-100px', left: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, #bfdbfe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.6}}></div>
-  <div style={{position: 'absolute', top: '200px', right: '-150px', width: '500px', height: '500px', background: 'radial-gradient(circle, #ddd6fe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.5}}></div>
-  <div style={{position: 'absolute', bottom: '100px', left: '50px', width: '350px', height: '350px', background: 'radial-gradient(circle, #bfdbfe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.4}}></div>
+      <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0}}>
 
-  {/* Wave */}
-  <div style={{position: 'absolute', bottom: 0, left: 0, width: '100%'}}>
-    <svg viewBox="0 0 1440 320" style={{display: 'block', opacity: 0.07}}>
-      <path fill="#2563eb" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,181.3C672,192,768,160,864,138.7C960,117,1056,107,1152,117.3C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320L1344,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
-    </svg>
-  </div>
-</div>
+        {/* Blur circles */}
+        <div className="float1" style={{position: 'absolute', top: '-100px', left: '-100px', width: '400px', height: '400px', background: 'radial-gradient(circle, #bfdbfe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.6}}></div>
+        <div className="float2" style={{position: 'absolute', top: '200px', right: '-150px', width: '500px', height: '500px', background: 'radial-gradient(circle, #ddd6fe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.5}}></div>
+        <div className="float3" style={{position: 'absolute', bottom: '100px', left: '50px', width: '350px', height: '350px', background: 'radial-gradient(circle, #bfdbfe 0%, transparent 70%)', borderRadius: '50%', opacity: 0.4}}></div>
+
+        {/* Wave */}
+        <div style={{position: 'absolute', bottom: 0, left: 0, width: '100%'}}>
+          <svg viewBox="0 0 1440 320" style={{display: 'block', opacity: 0.07}}>
+            <path fill="#2563eb" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,181.3C672,192,768,160,864,138.7C960,117,1056,107,1152,117.3C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320L1344,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
+          </svg>
+        </div>
+      </div>
 
       {/* Content */}
       <div style={{position: 'relative', zIndex: 1}}>

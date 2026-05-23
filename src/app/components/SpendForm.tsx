@@ -122,6 +122,7 @@ export default function SpendForm() {
                 border: entry.enabled ? '1.5px solid #93c5fd' : '1.5px solid #e2e8f0',
                 overflow: 'hidden',
                 transition: 'all 0.2s',
+                boxShadow: entry.enabled ? '0 4px 20px rgba(37, 99, 235, 0.15)' : '0 2px 8px rgba(0,0,0,0.04)',
               }}
             >
               <div
