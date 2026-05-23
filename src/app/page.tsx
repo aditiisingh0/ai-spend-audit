@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main style={{minHeight: '100vh', background: '#ffffff', color: '#0f172a'}}>
 
-      <nav style={{borderBottom: '1px solid #e5e7eb', padding: '16px 24px'}}>
+      <nav style={{ padding: '16px 24px'}}>
         <div style={{maxWidth: '800px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
             <div style={{width: '32px', height: '32px', background: '#2563eb', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -16,7 +16,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <div style={{maxWidth: '800px', margin: '0 auto', padding: '48px 24px 80px', textAlign: 'center'}}>
+      <div style={{maxWidth: '800px', margin: '0 auto', padding: '60px 12px 2px', textAlign: 'center'}}>
         <div style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#eff6ff', border: '1px solid #bfdbfe', color: '#2563eb', fontSize: '14px', padding: '6px 16px', borderRadius: '999px', marginBottom: '32px'}}>
           <span style={{width: '8px', height: '8px', background: '#3b82f6', borderRadius: '50%', display: 'inline-block'}}></span>
           Free • No login required • Instant results
@@ -32,7 +32,7 @@ export default function Home() {
           Find out in 2 minutes — free.
         </p>
 
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '48px', marginBottom: '64px'}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '48px', marginBottom: '48px', background: '#f8fafc', padding: '20px 40px', borderRadius: '16px', border: '1px solid #e2e8f0'}}>
           <div style={{textAlign: 'center'}}>
             <p style={{fontSize: '28px', fontWeight: '700', color: '#0f172a'}}>$1,440</p>
             <p style={{fontSize: '13px', color: '#9ca3af', marginTop: '4px'}}>avg annual savings</p>
@@ -50,13 +50,13 @@ export default function Home() {
         </div>
       </div>
 
-      <div style={{background: '#f8fafc', borderTop: '1px solid #e5e7eb', padding: '64px 24px'}}>
+      <div style={{background: '#ffffff', padding: '64px 24px'}}>
         <div style={{maxWidth: '600px', margin: '0 auto'}}>
           <SpendForm />
         </div>
       </div>
 
-      <div style={{borderTop: '1px solid #e5e7eb', padding: '32px', textAlign: 'center', color: '#9ca3af', fontSize: '14px'}}>
+      <div style={{ padding: '32px', textAlign: 'center', color: '#9ca3af', fontSize: '14px'}}>
         Built by Credex — discounted AI credits for startups
       </div>
     </main>

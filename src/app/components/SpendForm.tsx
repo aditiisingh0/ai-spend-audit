@@ -5,54 +5,14 @@ import { runAudit } from './auditEngine';
 import AuditResults from './AuditResults';
 
 const TOOLS = [
-  {
-    id: 'cursor',
-    name: 'Cursor',
-    icon: '⚡',
-    plans: ['Hobby', 'Pro', 'Business', 'Enterprise'],
-  },
-  {
-    id: 'github-copilot',
-    name: 'GitHub Copilot',
-    icon: '🤖',
-    plans: ['Individual', 'Business', 'Enterprise'],
-  },
-  {
-    id: 'claude',
-    name: 'Claude',
-    icon: '🧠',
-    plans: ['Free', 'Pro', 'Max', 'Team', 'Enterprise', 'API'],
-  },
-  {
-    id: 'chatgpt',
-    name: 'ChatGPT',
-    icon: '💬',
-    plans: ['Free', 'Plus', 'Team', 'Enterprise', 'API'],
-  },
-  {
-    id: 'gemini',
-    name: 'Gemini',
-    icon: '✨',
-    plans: ['Free', 'Pro', 'Ultra', 'API'],
-  },
-  {
-    id: 'windsurf',
-    name: 'Windsurf',
-    icon: '🏄',
-    plans: ['Free', 'Pro', 'Team'],
-  },
-  {
-    id: 'openai-api',
-    name: 'OpenAI API',
-    icon: '🔌',
-    plans: ['Pay as you go'],
-  },
-  {
-    id: 'anthropic-api',
-    name: 'Anthropic API',
-    icon: '🔮',
-    plans: ['Pay as you go'],
-  },
+  { id: 'cursor', name: 'Cursor', icon: '⚡', plans: ['Hobby', 'Pro', 'Business', 'Enterprise'] },
+  { id: 'github-copilot', name: 'GitHub Copilot', icon: '🤖', plans: ['Individual', 'Business', 'Enterprise'] },
+  { id: 'claude', name: 'Claude', icon: '🧠', plans: ['Free', 'Pro', 'Max', 'Team', 'Enterprise', 'API'] },
+  { id: 'chatgpt', name: 'ChatGPT', icon: '💬', plans: ['Free', 'Plus', 'Team', 'Enterprise', 'API'] },
+  { id: 'gemini', name: 'Gemini', icon: '✨', plans: ['Free', 'Pro', 'Ultra', 'API'] },
+  { id: 'windsurf', name: 'Windsurf', icon: '🏄', plans: ['Free', 'Pro', 'Team'] },
+  { id: 'openai-api', name: 'OpenAI API', icon: '🔌', plans: ['Pay as you go'] },
+  { id: 'anthropic-api', name: 'Anthropic API', icon: '🔮', plans: ['Pay as you go'] },
 ];
 
 interface ToolEntry {
@@ -70,10 +30,7 @@ interface FormData {
 
 const DEFAULT_FORM: FormData = {
   tools: Object.fromEntries(
-    TOOLS.map((t) => [
-      t.id,
-      { enabled: false, plan: t.plans[0], seats: 1, monthlySpend: 0 },
-    ])
+    TOOLS.map((t) => [t.id, { enabled: false, plan: t.plans[0], seats: 1, monthlySpend: 0 }])
   ),
   teamSize: 1,
   useCase: 'coding',
@@ -95,20 +52,14 @@ export default function SpendForm() {
   function toggleTool(id: string) {
     setForm((prev) => ({
       ...prev,
-      tools: {
-        ...prev.tools,
-        [id]: { ...prev.tools[id], enabled: !prev.tools[id].enabled },
-      },
+      tools: { ...prev.tools, [id]: { ...prev.tools[id], enabled: !prev.tools[id].enabled } },
     }));
   }
 
   function updateTool(id: string, field: keyof ToolEntry, value: string | number | boolean) {
     setForm((prev) => ({
       ...prev,
-      tools: {
-        ...prev.tools,
-        [id]: { ...prev.tools[id], [field]: value },
-      },
+      tools: { ...prev.tools, [id]: { ...prev.tools[id], [field]: value } },
     }));
   }
 
@@ -120,38 +71,32 @@ export default function SpendForm() {
 
   if (showResults) {
     const summary = runAudit(form);
-    return (
-      <AuditResults
-        summary={summary}
-        useCase={form.useCase}
-        onBack={() => setShowResults(false)}
-      />
-    );
+    return <AuditResults summary={summary} useCase={form.useCase} onBack={() => setShowResults(false)} />;
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div style={{maxWidth: '600px', margin: '0 auto'}}>
 
       {/* Team Info */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6 shadow-sm">
-        <h2 className="text-base font-semibold text-gray-900 mb-4">Your Team</h2>
-        <div className="grid grid-cols-2 gap-4">
+      <div style={{background: '#f8fafc', borderRadius: '16px', padding: '20px 24px', marginBottom: '24px', border: '1px solid #e2e8f0'}}>
+        <p style={{fontSize: '13px', fontWeight: '600', color: '#64748b', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Your Team</p>
+        <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px'}}>
           <div>
-            <label className="text-sm text-gray-500 mb-1.5 block">Team Size</label>
+            <label style={{fontSize: '13px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Team Size</label>
             <input
               type="number"
               min={1}
               value={form.teamSize}
               onChange={(e) => setForm((p) => ({ ...p, teamSize: Number(e.target.value) }))}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '14px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-500 mb-1.5 block">Primary Use Case</label>
+            <label style={{fontSize: '13px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Primary Use Case</label>
             <select
               value={form.useCase}
               onChange={(e) => setForm((p) => ({ ...p, useCase: e.target.value }))}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '14px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
             >
               <option value="coding">Coding</option>
               <option value="writing">Writing</option>
@@ -164,95 +109,102 @@ export default function SpendForm() {
       </div>
 
       {/* Tools */}
-      <div className="mb-20">
-        <h2 className="text-base font-semibold text-gray-900 mb-3">
-          AI Tools You Pay For
-        </h2>
-        <div className="space-y-4">
-          {TOOLS.map((tool) => {
-            const entry = form.tools[tool.id];
-            return (
+      <p style={{fontSize: '13px', fontWeight: '600', color: '#64748b', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>AI Tools You Pay For</p>
+      <div style={{display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px'}}>
+        {TOOLS.map((tool) => {
+          const entry = form.tools[tool.id];
+          return (
+            <div
+              key={tool.id}
+              style={{
+                background: entry.enabled ? '#f0f7ff' : '#ffffff',
+                borderRadius: '14px',
+                border: entry.enabled ? '1.5px solid #93c5fd' : '1.5px solid #e2e8f0',
+                overflow: 'hidden',
+                transition: 'all 0.2s',
+              }}
+            >
               <div
-                key={tool.id}
-                className={`bg-white rounded-2xl border transition-all shadow-sm ${
-                  entry.enabled
-                    ? 'border-blue-300 ring-2 ring-blue-100'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
+                style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', cursor: 'pointer'}}
+                onClick={() => toggleTool(tool.id)}
               >
-                <div className="flex items-center justify-between p-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{tool.icon}</span>
-                    <span className="font-medium text-gray-900">{tool.name}</span>
-                  </div>
-                  <button
-                    onClick={() => toggleTool(tool.id)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                      entry.enabled
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {entry.enabled ? '✓ Added' : '+ Add'}
-                  </button>
+                <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                  <span style={{fontSize: '22px'}}>{tool.icon}</span>
+                  <span style={{fontWeight: '500', fontSize: '15px', color: '#0f172a'}}>{tool.name}</span>
                 </div>
-
-                {entry.enabled && (
-                  <div className="px-4 pb-4 grid grid-cols-3 gap-3 border-t border-gray-100 pt-4">
-                    <div>
-                      <label className="text-xs text-gray-400 mb-1 block">Plan</label>
-                      <select
-                        value={entry.plan}
-                        onChange={(e) => updateTool(tool.id, 'plan', e.target.value)}
-                        className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      >
-                        {tool.plans.map((p) => (
-                          <option key={p} value={p}>{p}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-400 mb-1 block">Seats</label>
-                      <input
-                        type="number"
-                        min={1}
-                        value={entry.seats}
-                        onChange={(e) => updateTool(tool.id, 'seats', Number(e.target.value))}
-                        className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-400 mb-1 block">Monthly ($)</label>
-                      <input
-                        type="number"
-                        min={0}
-                        value={entry.monthlySpend}
-                        onChange={(e) => updateTool(tool.id, 'monthlySpend', Number(e.target.value))}
-                        className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                )}
+                <div style={{
+                  background: entry.enabled ? '#2563eb' : '#f1f5f9',
+                  color: entry.enabled ? '#ffffff' : '#64748b',
+                  padding: '6px 16px',
+                  borderRadius: '999px',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                }}>
+                  {entry.enabled ? '✓ Added' : '+ Add'}
+                </div>
               </div>
-            );
-          })}
-        </div>
+
+              {entry.enabled && (
+                <div style={{padding: '0 20px 16px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', borderTop: '1px solid #bfdbfe'}}>
+                  <div style={{paddingTop: '12px'}}>
+                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Plan</label>
+                    <select
+                      value={entry.plan}
+                      onChange={(e) => updateTool(tool.id, 'plan', e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
+                    >
+                      {tool.plans.map((p) => <option key={p} value={p}>{p}</option>)}
+                    </select>
+                  </div>
+                  <div style={{paddingTop: '12px'}}>
+                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Seats</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={entry.seats}
+                      onChange={(e) => updateTool(tool.id, 'seats', Number(e.target.value))}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
+                    />
+                  </div>
+                  <div style={{paddingTop: '12px'}}>
+                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Monthly ($)</label>
+                    <input
+                      type="number"
+                      min={0}
+                      value={entry.monthlySpend}
+                      onChange={(e) => updateTool(tool.id, 'monthlySpend', Number(e.target.value))}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Total + CTA */}
-      <div className="bg-white rounded-2xl border border-gray-200 p-6 flex items-center justify-between shadow-sm">
+      <div style={{background: '#f8fafc', borderRadius: '16px', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0'}}>
         <div>
-          <p className="text-sm text-gray-400">Total Monthly Spend</p>
-          <p className="text-4xl font-bold text-gray-900">${totalMonthly.toLocaleString()}</p>
+          <p style={{fontSize: '13px', color: '#64748b', marginBottom: '4px'}}>Total Monthly Spend</p>
+          <p style={{fontSize: '36px', fontWeight: '700', color: '#0f172a', lineHeight: '1'}}>${totalMonthly.toLocaleString()}</p>
         </div>
         <button
           onClick={() => enabledCount > 0 && setShowResults(true)}
           disabled={enabledCount === 0}
-          className={`font-semibold px-8 py-4 rounded-2xl transition-all text-base ${
-            enabledCount > 0
-              ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:-translate-y-0.5'
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
+          style={{
+            background: enabledCount > 0 ? '#2563eb' : '#e2e8f0',
+            color: enabledCount > 0 ? '#ffffff' : '#94a3b8',
+            border: 'none',
+            padding: '14px 28px',
+            borderRadius: '12px',
+            fontSize: '15px',
+            fontWeight: '600',
+            cursor: enabledCount > 0 ? 'pointer' : 'not-allowed',
+          }}
         >
           Run Audit →
         </button>
