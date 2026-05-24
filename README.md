@@ -8,7 +8,14 @@ Built as a lead generation tool for Credex, a discounted AI credits marketplace.
 
 ## Screenshots
 
-> Add 3 screenshots here after taking them — form, results page, shareable URL
+### Landing Page
+Clean hero section with value proposition — free, instant, no login required. Gradient background with blur circle effects.
+
+### Spend Input Form
+Tool cards expand on click to show plan, seats, and monthly spend. LocalStorage persistence — form survives page reload.
+
+### Results Page
+Per-tool breakdown with severity badges, AI-generated audit summary, email lead capture, and shareable link generation.
 
 ## Quick Start
 
