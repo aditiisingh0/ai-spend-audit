@@ -125,3 +125,46 @@
 - Add screenshots to README
 - Final polish and bug fixes
 - Submit
+## Day 6 — 2026-05-24
+
+**Hours worked:** 2
+
+**What I did:**
+- Conducted user interviews — reached out to 6 people on LinkedIn
+- Collected responses from Jespreet, Nilesh, Sayan, Vishal, Suman, Jiya
+- Wrote up USER_INTERVIEWS.md with full notes and design changes
+- Identified key pattern: nobody tracks AI spending, tool overlap is universal
+
+**What I learned:**
+- Free tier users are a real segment — audit needs to handle $0 savings honestly
+- Use case (coding vs research) drives tool choice more than price
+- Students are not the target user — employed developers and startup teams are
+
+**Blockers / what I'm stuck on:**
+- Nothing blocking — interviews completed
+
+**Plan for tomorrow:**
+- Final polish and README screenshots
+- DEVLOG Day 7 entry
+- Submission
+
+## Day 7 — 2026-05-25
+
+**Hours worked:** 2
+
+**What I did:**
+- Added all user interview notes to USER_INTERVIEWS.md
+- Final review of all markdown files
+- Verified CI is green on GitHub
+- Confirmed Vercel deployment is live at https://ai-spend-audit-gules.vercel.app
+- Took screenshots for README
+
+**What I learned:**
+- Writing up user interviews forces you to connect what you heard to what you built
+- The cross-interview patterns section was the most valuable part to write
+
+**Blockers / what I'm stuck on:**
+- Nothing — submission ready
+
+**Plan for tomorrow:**
+- Submit
