@@ -79,23 +79,27 @@ export default function SpendForm() {
 
       {/* Team Info */}
       <div style={{background: '#f8fafc', borderRadius: '16px', padding: '20px 24px', marginBottom: '24px', border: '1px solid #e2e8f0'}}>
-        <p style={{fontSize: '13px', fontWeight: '600', color: '#64748b', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Your Team</p>
+        <p style={{fontSize: '13px', fontWeight: '600', color: '#475569', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>Your Team</p>
         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px'}}>
           <div>
-            <label style={{fontSize: '13px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Team Size</label>
+            <label htmlFor="team-size" style={{fontSize: '13px', color: '#475569', display: 'block', marginBottom: '6px'}}>Team Size</label>
             <input
+              id="team-size"
               type="number"
               min={1}
               value={form.teamSize}
               onChange={(e) => setForm((p) => ({ ...p, teamSize: Number(e.target.value) }))}
+              aria-label="Team size"
               style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '14px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
             />
           </div>
           <div>
-            <label style={{fontSize: '13px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Primary Use Case</label>
+            <label htmlFor="use-case" style={{fontSize: '13px', color: '#475569', display: 'block', marginBottom: '6px'}}>Primary Use Case</label>
             <select
+              id="use-case"
               value={form.useCase}
               onChange={(e) => setForm((p) => ({ ...p, useCase: e.target.value }))}
+              aria-label="Primary use case"
               style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px 14px', fontSize: '14px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
             >
               <option value="coding">Coding</option>
@@ -109,7 +113,7 @@ export default function SpendForm() {
       </div>
 
       {/* Tools */}
-      <p style={{fontSize: '13px', fontWeight: '600', color: '#64748b', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>AI Tools You Pay For</p>
+      <p style={{fontSize: '13px', fontWeight: '600', color: '#475569', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px'}}>AI Tools You Pay For</p>
       <div style={{display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px'}}>
         {TOOLS.map((tool) => {
           const entry = form.tools[tool.id];
@@ -131,17 +135,21 @@ export default function SpendForm() {
                 onClick={() => toggleTool(tool.id)}
               >
                 <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
-                  <span style={{fontSize: '22px'}}>{tool.icon}</span>
+                  <span style={{fontSize: '22px'}} aria-hidden="true">{tool.icon}</span>
                   <span style={{fontWeight: '500', fontSize: '15px', color: '#0f172a'}}>{tool.name}</span>
                 </div>
-                <div style={{
-                  background: entry.enabled ? '#2563eb' : '#f1f5f9',
-                  color: entry.enabled ? '#ffffff' : '#64748b',
-                  padding: '6px 16px',
-                  borderRadius: '999px',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                }}>
+                <div
+                  role="button"
+                  aria-pressed={entry.enabled}
+                  aria-label={entry.enabled ? `Remove ${tool.name}` : `Add ${tool.name}`}
+                  style={{
+                    background: entry.enabled ? '#2563eb' : '#f1f5f9',
+                    color: entry.enabled ? '#ffffff' : '#475569',
+                    padding: '6px 16px',
+                    borderRadius: '999px',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                  }}>
                   {entry.enabled ? '✓ Added' : '+ Add'}
                 </div>
               </div>
@@ -149,35 +157,41 @@ export default function SpendForm() {
               {entry.enabled && (
                 <div style={{padding: '0 20px 16px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', borderTop: '1px solid #bfdbfe'}}>
                   <div style={{paddingTop: '12px'}}>
-                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Plan</label>
+                    <label htmlFor={`${tool.id}-plan`} style={{fontSize: '11px', color: '#475569', display: 'block', marginBottom: '6px'}}>Plan</label>
                     <select
+                      id={`${tool.id}-plan`}
                       value={entry.plan}
                       onChange={(e) => updateTool(tool.id, 'plan', e.target.value)}
                       onClick={(e) => e.stopPropagation()}
+                      aria-label={`${tool.name} plan`}
                       style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
                     >
                       {tool.plans.map((p) => <option key={p} value={p}>{p}</option>)}
                     </select>
                   </div>
                   <div style={{paddingTop: '12px'}}>
-                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Seats</label>
+                    <label htmlFor={`${tool.id}-seats`} style={{fontSize: '11px', color: '#475569', display: 'block', marginBottom: '6px'}}>Seats</label>
                     <input
+                      id={`${tool.id}-seats`}
                       type="number"
                       min={1}
                       value={entry.seats}
                       onChange={(e) => updateTool(tool.id, 'seats', Number(e.target.value))}
                       onClick={(e) => e.stopPropagation()}
+                      aria-label={`${tool.name} number of seats`}
                       style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
                     />
                   </div>
                   <div style={{paddingTop: '12px'}}>
-                    <label style={{fontSize: '11px', color: '#64748b', display: 'block', marginBottom: '6px'}}>Monthly ($)</label>
+                    <label htmlFor={`${tool.id}-spend`} style={{fontSize: '11px', color: '#475569', display: 'block', marginBottom: '6px'}}>Monthly ($)</label>
                     <input
+                      id={`${tool.id}-spend`}
                       type="number"
                       min={0}
                       value={entry.monthlySpend}
                       onChange={(e) => updateTool(tool.id, 'monthlySpend', Number(e.target.value))}
                       onClick={(e) => e.stopPropagation()}
+                      aria-label={`${tool.name} monthly spend in dollars`}
                       style={{width: '100%', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 10px', fontSize: '13px', color: '#0f172a', background: '#ffffff', outline: 'none'}}
                     />
                   </div>
@@ -191,13 +205,14 @@ export default function SpendForm() {
       {/* Total + CTA */}
       <div style={{background: '#f8fafc', borderRadius: '16px', padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #e2e8f0'}}>
         <div>
-          <p style={{fontSize: '13px', color: '#64748b', marginBottom: '4px'}}>Total Monthly Spend</p>
+          <p style={{fontSize: '13px', color: '#475569', marginBottom: '4px'}}>Total Monthly Spend</p>
           <p style={{fontSize: '36px', fontWeight: '700', color: '#0f172a', lineHeight: '1'}}>${totalMonthly.toLocaleString()}</p>
         </div>
         <button
           onClick={() => enabledCount > 0 && setShowResults(true)}
           disabled={enabledCount === 0}
           className={enabledCount > 0 ? 'glow-button' : ''}
+          aria-label="Run audit"
           style={{
             background: enabledCount > 0 ? '#2563eb' : '#e2e8f0',
             color: enabledCount > 0 ? '#ffffff' : '#94a3b8',
