@@ -3,168 +3,85 @@
 **Hours worked:** 2
 
 **What I did:**
-- Initialized Next.js + TypeScript project with Tailwind CSS
-- Created GitHub repository and pushed initial code
-- Set up GitHub Actions CI workflow — green on latest commit
-- Created all required markdown files (DEVLOG, ARCHITECTURE, REFLECTION, etc.)
-- Started pricing research for Cursor, ChatGPT, Claude, Copilot
+Set up the Next.js project with TypeScript and Tailwind. Created the GitHub repo and pushed the first commit. Added GitHub Actions CI — took a few tries to get it green because Node 20 was deprecated. Created all the required markdown files as empty placeholders. Started looking up pricing for Cursor, ChatGPT, Claude, and Copilot.
 
 **What I learned:**
-- GitHub Actions requires correct Node.js version — Node 20 was deprecated, switched to Node 22
-- Setting up CI early saves time debugging later
+CI setup is worth doing on day one. Debugging a broken workflow on day six would have been painful. Also learned that Node version matters in GitHub Actions — switched from 20 to 22 and it worked.
 
 **Blockers / what I'm stuck on:**
-- Pricing data still incomplete — need to verify all tool prices from official pages
+Pricing data is incomplete — need to go through official pages for each tool carefully.
 
 **Plan for tomorrow:**
-- Build spend input form with 8 AI tools
-- Add plan dropdown, seats input, monthly spend per tool
-- Implement localStorage persistence so form data survives page reload
+Build the spend input form with all 8 tools, plan dropdowns, seat count, and monthly spend. Make sure form state persists on page reload.
+
+---
 
 ## Day 2 — 2026-05-21
 
 **Hours worked:** 3
 
 **What I did:**
-- Built spend input form with 8 AI tools — Cursor, GitHub Copilot, Claude, ChatGPT, Gemini, Windsurf, OpenAI API, Anthropic API
-- Added plan dropdown, seats input, and monthly spend per tool
-- Implemented localStorage persistence — form data survives page reload
-- Built audit engine with defensible rules for each tool
-- Built results page showing per-tool breakdown and total savings
-- Wrote 6 automated tests for audit engine — all passing
+Built the full spend input form — 8 tools, each with plan dropdown, seats, and monthly spend. Wired up localStorage so the form survives page reloads. Built the audit engine with hardcoded rules for each tool — things like "Team plan for 2 users is overkill, switch to Pro." Also built the results page showing per-tool breakdown and total savings. Wrote 6 automated tests for the audit engine — all passing.
 
 **What I learned:**
-- Keeping audit logic in a separate file makes it much easier to test
-- localStorage is simple but effective for form persistence
+Keeping the audit logic in a separate file made testing really easy. I could just import the function and test it directly without any browser setup.
 
 **Blockers / what I'm stuck on:**
-- Need to add AI-generated summary using Anthropic API tomorrow
-- Pricing data still needs verification from official sources
+Need to add the AI-generated summary using the Anthropic API. Pricing data still needs verification.
 
 **Plan for tomorrow:**
-- Connect Anthropic API for personalized audit summary
-- Start building backend — Supabase for lead capture
-- Add shareable URL with OG tags
+Connect Anthropic API for the personalized summary. Set up Supabase for lead capture. Start on the shareable URL feature.
+
+---
 
 ## Day 3 — 2026-05-22
 
 **Hours worked:** 3
 
 **What I did:**
-- Built AI summary feature using Anthropic API with graceful fallback to templated summary
-- Set up Supabase database and created leads table
-- Built lead capture form — email, company name, role
-- Added honeypot spam protection
-- Leads saving successfully to Supabase — verified with test submission
-- Connected all features end to end — form → audit → results → lead capture
+Added the AI summary feature — it calls the Anthropic API and falls back to a templated summary if the API fails or the key is missing. Set up Supabase, created the leads table, and built the email capture form with honeypot spam protection. Tested the full flow end to end — form fills, audit runs, results show, email saves to database.
 
 **What I learned:**
-- Supabase is very fast to set up — table ready in minutes
-- Honeypot is simpler than captcha and less annoying for real users
-- Always test the full flow end to end, not just individual pieces
+Supabase is surprisingly fast to set up. The honeypot approach for spam is much simpler than captcha and doesn't annoy real users.
 
 **Blockers / what I'm stuck on:**
-- Anthropic API key not added yet — using fallback summary for now
-- Shareable URL still pending
+Anthropic API key not added yet — using fallback summary. Shareable URL still pending.
 
 **Plan for tomorrow:**
-- Build shareable URL with unique ID and OG tags
-- Deploy to Vercel
-- Start UI polish
+Build shareable URL with unique ID. Deploy to Vercel. Start UI polish and entrepreneurial files.
+
+---
 
 ## Day 4 — 2026-05-23
 
-**Hours worked:** 3
+**Hours worked:** 8
 
 **What I did:**
-- Built shareable audit URL with unique ID per audit
-- Added OG tags and Twitter Card meta tags for link previews
-- Created audits table in Supabase to store shared audits
-- Deployed to Vercel — live at https://ai-spend-audit-gules.vercel.app
-- Updated environment variables in Vercel dashboard
+Built the shareable audit URL — each audit gets a unique ID, stored in Supabase, accessible at /audit/[id]. Added OG tags and Twitter Card meta tags so links preview nicely when shared. Deployed to Vercel — took under 2 minutes. Then spent the rest of the day on UI polish — switched to white theme with gradient background, added blur circle effects, noise texture, card hover animations, glow on the Run Audit button, and fade-in animations on tool cards. Filled in all the markdown files — GTM, ECONOMICS, REFLECTION, PROMPTS, TESTS, LANDING_COPY, METRICS, ARCHITECTURE, README, PRICING_DATA.
 
 **What I learned:**
-- Vercel deployment is very fast — under 2 minutes from push to live
-- Environment variables must be set in Vercel separately from .env.local
+Mixing Tailwind classes with inline styles causes weird conflicts. Switched to pure inline styles for the results page and everything became predictable. CSS animations defined in globals.css work more reliably than trying to do them inline.
 
 **Blockers / what I'm stuck on:**
-- NEXT_PUBLIC_APP_URL needs to be updated to real Vercel URL
-- UI polish still pending
+User interviews — sent messages to several people on LinkedIn, waiting for replies.
 
 **Plan for tomorrow:**
-- UI polish — better landing page, hero section, improved results page
-- Fill in PRICING_DATA.md, ARCHITECTURE.md
-- Start entrepreneurial files — GTM, ECONOMICS
+Complete user interviews. Add Resend email. Fix any accessibility issues. Submit.
 
-## Day 5 — 2026-05-23 (evening)
+---
 
-**Hours worked:** 6
+## Day 5 — 2026-05-25
+
+**Hours worked:** 4
 
 **What I did:**
-- Improved UI significantly — white theme with gradient background
-- Added blur circles + wave background effects
-- Added noise texture effect for premium feel
-- Added card hover scale effect and shadow
-- Added glow animation on Run Audit button
-- Added fade-in-up animation on tool cards
-- Added expand-down animation when tool is added
-- Added page transition animation on results page
-- Fixed AuditResults.tsx to use inline styles — no more Tailwind conflicts
-- All markdown files filled — GTM, ECONOMICS, REFLECTION, PROMPTS, TESTS, LANDING_COPY, METRICS, ARCHITECTURE, README
+Got responses from 6 people on LinkedIn — Jespreet, Nilesh, Sayan, Vishal, Suman, and Jiya. Wrote up USER_INTERVIEWS.md with quotes, design changes, and cross-interview patterns. Added Resend for transactional email — users now get a confirmation email with their audit summary when they submit their email. Fixed accessibility issues — added aria-labels and htmlFor to all form inputs. Ran Lighthouse on the live URL — Performance 100, Accessibility 100, Best Practices 100, SEO 100. Did a final review of all files and verified CI is green.
 
 **What I learned:**
-- Tailwind classes don't always work reliably with inline styles mixed — inline styles are more predictable
-- CSS animations in globals.css work better than inline style tags in JSX
+The Resend API key had to be added to Vercel environment variables separately — it wasn't enough to have it in .env.local. Aria-labels on form inputs pushed the Lighthouse accessibility score from 83 to 100.
 
 **Blockers / what I'm stuck on:**
-- User interviews still pending — waiting for replies
-- Anthropic API key not added — using fallback summary
+Nothing — everything is working end to end.
 
 **Plan for tomorrow:**
-- Complete user interviews
-- Add screenshots to README
-- Final polish and bug fixes
-- Submit
-## Day 6 — 2026-05-24
-
-**Hours worked:** 2
-
-**What I did:**
-- Conducted user interviews — reached out to 6 people on LinkedIn
-- Collected responses from Jespreet, Nilesh, Sayan, Vishal, Suman, Jiya
-- Wrote up USER_INTERVIEWS.md with full notes and design changes
-- Identified key pattern: nobody tracks AI spending, tool overlap is universal
-
-**What I learned:**
-- Free tier users are a real segment — audit needs to handle $0 savings honestly
-- Use case (coding vs research) drives tool choice more than price
-- Students are not the target user — employed developers and startup teams are
-
-**Blockers / what I'm stuck on:**
-- Nothing blocking — interviews completed
-
-**Plan for tomorrow:**
-- Final polish and README screenshots
-- DEVLOG Day 7 entry
-- Submission
-
-## Day 7 — 2026-05-25
-
-**Hours worked:** 2
-
-**What I did:**
-- Added all user interview notes to USER_INTERVIEWS.md
-- Final review of all markdown files
-- Verified CI is green on GitHub
-- Confirmed Vercel deployment is live at https://ai-spend-audit-gules.vercel.app
-- Took screenshots for README
-
-**What I learned:**
-- Writing up user interviews forces you to connect what you heard to what you built
-- The cross-interview patterns section was the most valuable part to write
-
-**Blockers / what I'm stuck on:**
-- Nothing — submission ready
-
-**Plan for tomorrow:**
-- Submit
+Submit.
